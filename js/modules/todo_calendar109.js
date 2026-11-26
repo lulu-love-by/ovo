@@ -1,0 +1,22 @@
+/* Project deadlines directly from task records; no duplicate calendar copies. */
+(()=>{'use strict';
+const valid=v=>v!==null&&v!==''&&v!==undefined&&Number.isFinite(Number(v))&&Number(v)>0;
+function rows(c){return (c.uwuChatTools?.lists||[]).flatMap(l=>(l.items||[]).filter(i=>valid(i.deadline)).map(i=>({id:'todo:'+c.id+':'+l.id+':'+i.id+':'+Number(i.deadline),itemId:i.id,listId:l.id,chatId:c.id,title:i.text,listTitle:l.title,owner:i.owner,deadline:Number(i.deadline),progress:Number(i.progress)||0,person:i.owner==='char'?(c.remarkName||c.realName):(c.myName||'我')})));}
+function onDay(day){const C=window.UwUCalendar;return (db.characters||[]).flatMap(rows).filter(e=>C.dateKey(e.deadline)===day).sort((a,b)=>a.deadline-b.deadline);}
+function due(c,now=new Date()){const at=+now,sent=c.calendarLedger?.sent||{},checks=c.smartReply?.todoChecks94||{};return rows(c).filter(e=>e.progress<100&&e.deadline-at<=86400000&&!sent[e.id]&&!checks[e.id]).map(e=>({key:e.id,type:'todo',title:e.title,text:(e.owner==='char'?'你负责的待办':'对方负责的待办')+'「'+e.title+'」截止于 '+new Date(e.deadline).toLocaleString('zh-CN')+'，当前进度 '+e.progress+'%。'+(e.deadline<=at?'截止时间已到。':'距离截止不足24小时。')+'这是截止时间提示，是否提起依人设和当前情境决定。'}));}
+function context(c){const items=(c.uwuChatTools?.lists||[]).flatMap(l=>(l.items||[]).filter(i=>i.progress<100).map(i=>({id:i.id,listId:l.id,事项:i.text,负责人:i.owner,截止时间:valid(i.deadline)?new Date(Number(i.deadline)).toISOString():null,进度:i.progress})));return items.length?'\n[待办进度资料]\n'+JSON.stringify(items)+'\n':'';}
+function plans(c){const sent=c.calendarLedger?.sent||{};return rows(c).filter(e=>e.progress<100&&!sent[e.id]).map(e=>({id:e.id,title:e.title,owner:e.owner,deadline:e.deadline,once:true}));}
+function signature(c){return rows(c).map(e=>[e.id,e.title,e.progress,e.owner]);}
+let ticking=false,started=false;
+function entry(id){for(const c of db.characters||[]){const event=rows(c).find(e=>e.id===id);if(event)return {c,event};}return null;}
+async function nudge(id){const found=entry(id);if(!found)throw Error('事项已删除或截止时间已更改');return window.UwUChatToolsUI?.stageTodo109(found.c,{kind:'todo',id:found.event.listId,itemIds:[found.event.itemId]});}
+
+function noticeElement(c,m){const wrap=document.createElement('div');wrap.className='message-wrapper system-notification';wrap.dataset.id=m.id;const b=document.createElement('button');b.type='button';b.className='system-notification-bubble cal-todo-notice109';const live=entry(m.uwuTodoOverdue109?.id),text=live?.event.progress>=100?'事项截止提醒 · 后续已完成':'事项已到截止时间，尚未完成';if(!live){b.textContent='此待办已删除或截止时间已更改';b.disabled=true;wrap.append(b);return wrap;}b.textContent=text+' · '+live.event.title+' · 点击查看';b.onclick=()=>window.CalendarUI?.dateDetails109(window.UwUCalendar.dateKey(m.uwuTodoOverdue109.deadline),m.uwuTodoOverdue109.id);wrap.append(b);return wrap;}
+async function tick(now=Date.now()){
+ if(ticking||typeof db==='undefined'||document.hidden)return;ticking=true;try{for(const c of db.characters||[]){const events=rows(c).filter(e=>e.owner==='char'&&e.progress<100&&e.deadline<=now);if(!events.length)continue;const had=!!c.todoOverdue109,record=c.todoOverdue109??={sent:{}},before={...record.sent},added=[];record.sent??={};for(const e of events.filter(e=>!record.sent[e.id]).slice(0,10)){const m={id:crypto.randomUUID(),role:'system',content:'[system-display:「'+e.title.replace(/[\[\]]/g,'')+'」已到截止时间，提醒时尚未完成。]',timestamp:now,isContextDisabled:true,uwuTodoOverdue109:{id:e.id,title:e.title,deadline:e.deadline,listId:e.listId,itemId:e.itemId}};record.sent[e.id]={at:now,messageId:m.id,popupShown:false};c.history.push(m);added.push(m);}
+ const visible=typeof currentChatId!=='undefined'&&String(currentChatId)===String(c.id)&&typeof currentChatType!=='undefined'&&currentChatType==='private';if(added.length){try{await saveData({chat:c});}catch(error){const ids=new Set(added.map(m=>m.id));c.history=c.history.filter(m=>!ids.has(m.id));if(had)record.sent=before;else delete c.todoOverdue109;throw error;}if(visible&&added.length&&typeof renderMessages==='function')renderMessages(false,true);if(visible)window.UwUChatToolsUI?.refreshTodoDraft109();}}
+ 
+ }finally{ticking=false;}}
+function start(){if(started)return;started=true;setInterval(()=>void tick().catch(console.error),30000);void tick().catch(console.error);}window.addEventListener('uwu-db-ready',start);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&started)void tick().catch(console.error);});
+window.UwUTodoCalendar109={rows,onDay,due,context,plans,signature,entry,nudge,noticeElement,tick};
+})();
