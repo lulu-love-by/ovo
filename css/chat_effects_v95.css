@@ -1,0 +1,36 @@
+/* Scoped additions only. No existing theme selector or colour is overridden. */
+.uwu-fx95{display:inline;white-space:pre-wrap}
+.uwu-fx95-letter{display:inline-block;white-space:pre;animation-duration:1.8s;animation-iteration-count:infinite;animation-timing-function:ease-in-out;animation-delay:calc(var(--fx-i,0)*45ms)}
+.uwu-fx95-big>.uwu-fx95-letter{animation-name:uwu95-big}
+.uwu-fx95-small>.uwu-fx95-letter{animation-name:uwu95-small}
+.uwu-fx95-shake>.uwu-fx95-letter{animation-name:uwu95-shake}
+.uwu-fx95-nod>.uwu-fx95-letter{animation-name:uwu95-nod}
+.uwu-fx95-explode>.uwu-fx95-letter{animation-name:uwu95-explode}
+.uwu-fx95-ripple>.uwu-fx95-letter{animation-name:uwu95-ripple}
+.uwu-fx95-bloom>.uwu-fx95-letter{animation-name:uwu95-bloom}
+.uwu-fx95-jitter>.uwu-fx95-letter{animation-name:uwu95-jitter}
+@keyframes uwu95-big{0%,75%,100%{transform:scale(1)}30%,50%{transform:scale(1.45)}}
+@keyframes uwu95-small{0%,75%,100%{transform:scale(1)}30%,50%{transform:scale(.65)}}
+@keyframes uwu95-shake{0%,55%,100%{transform:rotate(0)}15%,35%{transform:rotate(-12deg)}25%,45%{transform:rotate(12deg)}}
+@keyframes uwu95-nod{0%,60%,100%{transform:translateY(0)}20%,40%{transform:translateY(3px)}30%,50%{transform:translateY(-2px)}}
+@keyframes uwu95-explode{0%,10%,80%,100%{transform:translate(0,0) scale(1);opacity:1}45%{transform:translate(calc((var(--fx-i,0) - 3)*1.5px),-7px) scale(1.3);opacity:.25}}
+@keyframes uwu95-ripple{0%,65%,100%{transform:translateY(0)}25%{transform:translateY(-5px)}45%{transform:translateY(2px)}}
+@keyframes uwu95-bloom{0%,80%,100%{transform:scale(1);filter:blur(0);opacity:1}35%{transform:scale(1.25);filter:blur(1px);opacity:.5}55%{transform:scale(1.1);filter:blur(0);opacity:1}}
+@keyframes uwu95-jitter{0%,60%,100%{transform:translate(0,0)}10%,30%,50%{transform:translate(-1px,1px)}20%,40%{transform:translate(1px,-1px)}}
+#uwu-fx-button95{touch-action:none;user-select:none;-webkit-user-select:none;position:fixed;z-index:1010;box-shadow:0 2px 8px #0003;border:0;border-radius:50%;width:30px;height:30px;padding:0;background:#f2f3f5;color:#30343b;font:600 14px system-ui;cursor:pointer}
+#uwu-fx-button95[aria-pressed=true]{background:rgba(120,150,180,.18)}
+#uwu-fx-panel95{position:relative;z-index:auto;flex:1;width:100%;height:100%;min-height:0;box-sizing:border-box;padding:12px;border:1px solid rgba(150,150,150,.25);border-radius:20px;background:rgba(248,249,251,.97);color:#30343b;box-shadow:0 8px 32px #0002;max-height:none;overflow:auto;font:14px system-ui;overscroll-behavior:contain}
+#uwu-fx-panel95 .uwu-fx-heading95{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+#uwu-fx-panel95 .uwu-fx-grid95{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#uwu-fx-panel95 button{border:0;border-radius:10px;background:rgba(130,145,165,.13);color:inherit;padding:9px;min-height:38px;font:inherit;cursor:pointer}
+#uwu-fx-panel95 button[aria-pressed=true]{background:#477bac;color:white}
+#uwu-fx-panel95 .uwu-fx-hint95{font-size:12px;margin-top:10px;line-height:1.6;opacity:.8}
+#uwu-fx-preview95{padding:10px;margin-bottom:10px;min-height:30px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:10px;background:rgba(130,145,165,.08)}
+.uwu-fx-menu-backdrop95{position:fixed;inset:0;background:rgba(0,0,0,.12);z-index:9990}
+body.uwu-motion-menu95 .context-menu{z-index:10001;max-height:70dvh;overflow:auto}
+@media(prefers-reduced-motion:reduce){.uwu-fx95-letter{animation:none!important}}
+
+#uwu-fx-button95[hidden]{display:none!important}
+
+.uwu-send-flight95,.uwu-send-companion95{position:fixed;left:0;top:0;z-index:10000;pointer-events:none!important;overflow:visible;transform-origin:50% 50%;contain:layout style;will-change:transform,opacity}
+.uwu-send-flight-fit95{position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none!important}
