@@ -1,0 +1,2116 @@
+/* Reference palette; independent diary toggle, including its sheets. */
+.xd-screen,.xd-shade,.xd-share-card {
+  --xd-bg:#fff; --xd-text:#0f1419; --xd-blue:#1d9bf0;
+  --xd-muted:#687681; --xd-line:#eff1f2; --xd-border:#cfd9de;
+  --xd-surface:#f7f9fa; --xd-soft:#eef3f5; --xd-input:#fff;
+  --xd-button:#0f1419; --xd-button-text:#fff;
+  color-scheme:light;
+}
+#phone-screen.xd-screen.xd-night,.xd-shade.xd-night {
+  --xd-bg:#000000; --xd-text:#e7e9ea; --xd-muted:#71767b;
+  --xd-line:#2f3336; --xd-border:#2f3336; --xd-surface:#16181c;
+  --xd-soft:#202327; --xd-input:#202327;
+  --xd-button:#eff3f4; --xd-button-text:#0f1419;
+  color-scheme:dark;
+}
+/* X-like exchange diary. Scoped to preserve the existing phone and contacts layout. */
+#phone-screen.xd-screen {
+  background: var(--xd-bg) !important;
+  color: var(--xd-text) !important;
+  flex-direction: column;
+  --xd-system-font:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans CJK SC",
+    sans-serif;
+  font-family: var(--xd-system-font);
+  padding: 0 !important;
+  overflow: hidden;
+}
+.xd-screen *,
+.xd-sheet *,
+.xd-share-card * {
+  box-sizing: border-box;
+}
+.xd-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-align: left;
+}
+.xd-button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.xd-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: inherit;
+}
+.xd-icon svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.xd-icon:hover {
+  background: var(--xd-soft);
+}
+.xd-icon small {
+  font-size: 12px;
+}
+.xd-screen svg,
+.xd-sheet svg,
+.xd-share-card svg {
+  vertical-align: middle;
+}
+.xd-muted,
+.xd-time {
+  color: var(--xd-muted, var(--xd-muted));
+}
+#phone-screen.xd-screen > .xd-header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 8px;
+  padding-top: max(15px, var(--uwu-top-inset, env(safe-area-inset-top, 0px)));
+  min-height: 60px;
+  background: var(--xd-bg) !important;
+  border-bottom: 1px solid var(--xd-line);
+  z-index: 3;
+  color: var(--xd-text);
+}
+.xd-title {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.25;
+}
+.xd-title-button {
+  max-width: 100%;
+  font-size: 19px;
+  font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+.xd-title small {
+  font-size: 12px;
+  color: var(--xd-muted);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 3px;
+}
+.xd-body {
+  position: relative;
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  overscroll-behavior: contain;
+  padding: 0 0 95px;
+  scrollbar-width: thin;
+}
+.xd-profile {
+  position: relative;
+}
+.xd-banner {
+  width: 100%;
+  aspect-ratio: 3/1;
+  background: var(--xd-surface);
+  overflow: hidden;
+}
+.xd-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.xd-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--xd-surface);
+  color: var(--xd-muted);
+  font: 600 18px/1 var(--xd-system-font, system-ui);
+  overflow: hidden;
+}
+.xd-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.xd-profile > .xd-large {
+  position: absolute;
+  top: calc((100vw - 0px) / 3 - 48px);
+  left: 15px;
+  width: 96px;
+  height: 96px;
+  border: 4px solid var(--xd-bg);
+  box-sizing: content-box;
+  font-size: 34px;
+}
+.xd-profile-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 62px;
+  padding: 10px 15px;
+}
+.xd-outline {
+  border: 1px solid var(--xd-border);
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 650;
+  padding: 8px 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.xd-outline.xd-icon {
+  padding: 0;
+  width: 34px;
+  height: 34px;
+}
+.xd-profile-info {
+  padding: 10px 15px 12px;
+}
+.xd-profile-info h1 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 23px;
+  line-height: 1.2;
+  margin: 0 0 5px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+.xd-profile-info h1 > svg:not(.xd-badge) {
+  width: 19px;
+  height: 19px;
+}
+.xd-badge {
+  display: inline-block;
+  color: var(--xd-blue, #1d9bf0);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.xd-handle {
+  font-size: 14px;
+  color: var(--xd-muted);
+  margin: 0 0 12px;
+}
+.xd-bio {
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 0 0 10px;
+}
+.xd-profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--xd-muted);
+  font-size: 13px;
+}
+.xd-profile-meta span {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.xd-profile-meta svg {
+  width: 16px;
+  height: 16px;
+}
+.xd-count {
+  font-size: 13px;
+  font-weight: 650;
+  margin: 12px 0 2px;
+}
+.xd-tabs {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid var(--xd-line);
+  background: var(--xd-bg);
+}
+.xd-tabs > .xd-button {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  padding: 16px 8px;
+  color: var(--xd-muted);
+  font-size: 15px;
+  font-weight: 550;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xd-tabs > .selected {
+  color: var(--xd-text);
+  font-weight: 750;
+}
+.xd-tabs > .selected:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  border-radius: 3px;
+  left: 22%;
+  right: 22%;
+  background: var(--xd-blue);
+}
+.xd-filters {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--xd-muted);
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-filters .selected {
+  color: var(--xd-text);
+  font-weight: 750;
+}
+.xd-group {
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-group .xd-letter {
+  border-bottom: 0;
+}
+.xd-letter {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-letter > .xd-avatar {
+  position: relative;
+  z-index: 1;
+}
+.xd-letter-main {
+  min-width: 0;
+  flex: 1;
+}
+.xd-byline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 20px;
+  line-height: 1.3;
+  font-size: 14px;
+  min-width: 0;
+}
+.xd-byline strong {
+  font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 65%;
+}
+.xd-byline > .xd-muted {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.xd-byline > .xd-icon {
+  margin-left: auto;
+  width: 26px;
+  height: 22px;
+  color: var(--xd-muted);
+}
+.xd-byline .xd-badge {
+  width: 16px;
+  height: 16px;
+}
+.xd-time {
+  font-size: 12px;
+  display: block;
+  margin-top: 2px;
+  line-height: 1.5;
+}
+.xd-preview {
+  margin: 6px 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.xd-text {
+  color: var(--xd-blue, #1d9bf0);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 3px 0;
+}
+.xd-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--xd-muted, var(--xd-muted));
+  margin-top: 6px;
+}
+.xd-toolbar .xd-icon {
+  width: auto;
+  min-width: 28px;
+  height: 30px;
+  border-radius: 0;
+}
+.xd-toolbar svg {
+  width: 19px;
+  height: 19px;
+}
+.xd-toolbar .xd-liked {
+  color: #f91880;
+}
+.xd-liked svg {
+  fill: currentColor;
+  stroke-width: 1.2;
+}
+.xd-connected:before {
+  content: "";
+  position: absolute;
+  left: 34px;
+  top: 59px;
+  bottom: -15px;
+  width: 2px;
+  background: var(--xd-border);
+}
+.xd-fab {
+  position: absolute;
+  right: 20px;
+  bottom: 24px;
+  background: var(--xd-blue) !important;
+  color: white !important;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 13px #0f141924;
+  border-radius: 50%;
+}
+.xd-fab svg {
+  width: 29px;
+  height: 29px;
+}
+.xd-empty {
+  padding: 40px 28px;
+  color: var(--xd-text);
+}
+.xd-empty h2 {
+  font-size: 25px;
+  line-height: 1.4;
+  margin: 0 0 10px;
+  font-weight: 800;
+}
+.xd-empty p {
+  font-size: 14px;
+  color: var(--xd-muted);
+  line-height: 1.8;
+}
+.xd-setup {
+  padding: 12px 16px;
+  background: var(--xd-surface);
+  border-bottom: 1px solid var(--xd-line);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.xd-setup p {
+  font-size: 12px;
+  color: var(--xd-muted);
+  margin: 0;
+  flex: 1;
+}
+.xd-setup .xd-text {
+  font-size: 12px;
+}
+.xd-to {
+  padding: 16px;
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-to .xd-byline {
+  gap: 8px;
+}
+.xd-to .xd-avatar {
+  width: 32px;
+  height: 32px;
+}
+.xd-to p {
+  font-size: 12px;
+  margin: 12px 0 0;
+}
+.xd-compose-area {
+  display: flex;
+  gap: 10px;
+  padding: 18px 16px 0;
+  min-height: 40%;
+}
+.xd-compose-main {
+  flex: 1;
+  min-width: 0;
+}
+.xd-editor {
+  outline: 0;
+  min-height: 220px;
+  overflow-wrap: anywhere;
+  padding: 8px 0;
+  white-space: pre-wrap;
+}
+.xd-editor:empty:before {
+  content: attr(data-placeholder);
+  color: var(--xd-muted);
+}
+.xd-prose p,
+.xd-prose div {
+  margin: 0 0 1em;
+}
+.xd-prose p:last-child,
+.xd-prose div:last-child {
+  margin-bottom: 0;
+}
+.xd-prose blockquote {
+  border-left: 2px solid var(--xd-border);
+  margin: 12px 0;
+  padding-left: 12px;
+}
+.xd-prose h1 {
+  font-size: 1.6em;
+}
+.xd-prose h2 {
+  font-size: 1.35em;
+}
+.xd-prose h3 {
+  font-size: 1.15em;
+}
+.xd-prose mark {
+  background: #fff0aa;
+  color: inherit;
+}
+.xd-prose * {
+  max-width: 100%;
+}
+.xd-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--xd-blue, #1d9bf0);
+  color: #fff;
+  border-radius: 22px;
+  padding: 8px 19px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-align: center;
+}
+.xd-cancel {
+  font-size: 15px;
+  padding: 8px 0;
+}
+.xd-compose-footer {
+  position: sticky;
+  bottom: 0;
+  padding: 10px 16px;
+  background: var(--xd-bg);
+  border-top: 1px solid var(--xd-line);
+  backdrop-filter: blur(12px);
+  z-index: 2;
+}
+.xd-compose-footer > small {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+}
+.xd-editor-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.xd-editor-tools button {
+  font-size: 12px;
+  padding: 5px 7px;
+  color: var(--xd-blue);
+  background: var(--xd-surface);
+  border-radius: 5px;
+}
+.xd-editor-tools input {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.xd-compose .xd-body {
+  padding-bottom: 0;
+}
+.xd-compose-extras {
+  padding: 0 16px 16px 68px;
+}
+.xd-compose-extras blockquote {
+  border-left: 2px solid var(--xd-border);
+  padding-left: 12px;
+  margin: 12px 0;
+  white-space: pre-wrap;
+  font-size: 13px;
+}
+.xd-compose-extras blockquote button {
+  display: block;
+  font-size: 12px;
+}
+.xd-read-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 16px;
+}
+.xd-read-author .xd-byline {
+  flex-wrap: wrap;
+}
+.xd-full {
+  padding: 8px 18px 20px;
+  overflow-wrap: anywhere;
+}
+.xd-full .xd-mark {
+  cursor: pointer;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  position: relative;
+}
+.xd-mark-highlight {
+  background: var(--xd-mark-color);
+}
+.xd-mark-underline {
+  text-decoration: underline;
+  text-decoration-color: #da9c50;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.xd-mark-circle {
+  border: 1px solid #c79472;
+  border-radius: 50%;
+  padding: 1px 3px;
+}
+.xd-read-time {
+  padding: 12px 16px;
+  color: var(--xd-muted);
+  font-size: 12px;
+  margin: 0;
+}
+.xd-read-time + .xd-toolbar {
+  padding: 8px 18px;
+  margin: 0;
+  border-top: 1px solid var(--xd-line);
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-inline-pad {
+  margin: 12px 16px;
+}
+.xd-comments {
+  border-top: 1px solid var(--xd-line);
+}
+.xd-comments h3 {
+  padding: 14px 16px;
+  margin: 0;
+  font-size: 15px;
+}
+.xd-comment {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-comment > div {
+  min-width: 0;
+  flex: 1;
+}
+.xd-comment p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 8px 0;
+}
+.xd-comment-form {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.xd-comment-form textarea {
+  width: 100%;
+  min-height: 75px;
+  font: 14px/1.65 inherit;
+  border: 1px solid var(--xd-border);
+  border-radius: 12px;
+  padding: 12px;
+  resize: vertical;
+}
+.xd-comment-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--xd-muted);
+  flex: 1;
+}
+.xd-comment-toggle input {
+  accent-color: var(--xd-blue);
+}
+.xd-quote {
+  display: block;
+  border-left: 2px solid var(--xd-border);
+  padding-left: 12px;
+  margin: 12px 18px;
+}
+.xd-quote p {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.xd-quote small {
+  color: var(--xd-muted);
+  font-size: 12px;
+}
+.xd-attachment {
+  margin: 12px 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--xd-line);
+  overflow: hidden;
+}
+.xd-attachment img {
+  max-width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+.xd-attachment strong {
+  font-size: 13px;
+}
+.xd-attachment p {
+  white-space: pre-wrap;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.xd-selection-tools {
+  display: flex;
+  gap: 15px;
+  padding: 10px 16px;
+  background: var(--xd-surface);
+  font-size: 13px;
+  color: var(--xd-blue);
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+}
+.xd-excerpt-quote {
+  border-left: 2px solid var(--xd-border);
+  padding-left: 12px;
+  margin: 12px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.xd-excerpt-note {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 8px;
+}
+.xd-excerpt-note .xd-avatar {
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+.xd-excerpt-note > div {
+  flex: 1;
+  min-width: 0;
+}
+.xd-excerpt-note small {
+  font-size: 11px;
+}
+.xd-excerpt-note p {
+  margin: 4px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.xd-locate {
+  background: #d9efff;
+  animation: xd-flash 2s ease-out;
+}
+.xd-month-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-month-controls input {
+  width: 70px;
+  font-weight: 700;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  text-align: right;
+  color: inherit;
+}
+.xd-month-controls select {
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 700;
+  color: inherit;
+}
+.xd-next svg {
+  transform: rotate(180deg);
+}
+.xd-today {
+  display: block;
+  margin: 10px 16px 10px auto;
+}
+.xd-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px 0;
+  padding: 0 15px;
+}
+.xd-calendar-grid > small {
+  text-align: center;
+  padding: 10px 0;
+}
+.xd-day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 38px;
+  height: 38px;
+  font-size: 16px;
+  border-radius: 50%;
+}
+.xd-day.selected {
+  background: var(--xd-blue);
+  color: white;
+}
+.xd-day.today:not(.selected) {
+  border: 1px solid var(--xd-muted);
+}
+.xd-day i {
+  position: absolute;
+  bottom: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--xd-muted);
+}
+.xd-day.selected i {
+  background: white;
+}
+.xd-calendar-hint {
+  font-size: 12px;
+  color: var(--xd-muted);
+  margin: 18px 16px;
+}
+.xd-date-heading {
+  border-top: 1px solid var(--xd-line);
+  border-bottom: 1px solid var(--xd-line);
+  padding: 8px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.xd-date-heading > strong {
+  font-size: 15px;
+}
+.xd-date-heading .xd-filters {
+  padding: 8px 0;
+  border: 0;
+  gap: 14px;
+}
+.xd-search {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 16px;
+  padding: 11px 16px;
+  border: 0;
+  background: var(--xd-soft);
+  border-radius: 22px;
+  font: 14px var(--xd-system-font);
+}
+.xd-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 27000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: #0005;
+  padding-top: calc(16px + var(--uwu-top-inset, env(safe-area-inset-top, 0px)));
+  color: var(--xd-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.xd-sheet {
+  width: 100%;
+  max-width: 560px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--xd-bg);
+  border-radius: 20px 20px 0 0;
+  overflow: hidden;
+}
+.xd-sheet > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--xd-line);
+  flex: none;
+}
+.xd-sheet > header strong {
+  font-size: 17px;
+}
+.xd-form {
+  overflow: auto;
+  min-height: 0;
+  padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.xd-form > .xd-button:not(.xd-text) {
+  padding: 12px 14px;
+  border: 1px solid var(--xd-surface);
+  border-radius: 20px;
+  font-size: 14px;
+}
+.xd-form > .xd-primary {
+  border: 0 !important;
+}
+.xd-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+}
+.xd-field input,
+.xd-field select,
+.xd-field textarea {
+  font:
+    14px/1.6 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  border: 1px solid var(--xd-border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: var(--xd-bg);
+  color: var(--xd-text);
+  width: 100%;
+  min-width: 0;
+}
+.xd-field input[type="file"] {
+  font-size: 12px;
+}
+.xd-field textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+.xd-switch {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 5px 0;
+}
+.xd-switch input {
+  width: 19px;
+  height: 19px;
+  accent-color: #1d9bf0;
+}
+.xd-form h3 {
+  font-size: 15px;
+  margin: 12px 0 0;
+}
+.xd-form details {
+  border-top: 1px solid var(--xd-line);
+  padding-top: 12px;
+}
+.xd-form details .xd-field {
+  margin-top: 12px;
+}
+.xd-form p {
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.xd-form > small {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.xd-form blockquote {
+  border-left: 2px solid var(--xd-border);
+  margin: 0;
+  padding: 4px 12px;
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.xd-image-preview {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  background: var(--xd-surface);
+  border-radius: 8px;
+}
+.xd-annotation-row {
+  border: 0 !important;
+  border-bottom: 1px solid var(--xd-line) !important;
+  border-radius: 0 !important;
+}
+.xd-share-card {
+  display: block;
+  max-width: 290px;
+  min-width: 210px;
+  border: 1px solid var(--xd-border);
+  background: var(--xd-bg);
+  border-radius: 14px;
+  padding: 13px 14px;
+  color: var(--xd-text);
+  font:
+    14px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  text-align: left;
+}
+.xd-share-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.xd-share-author > .xd-avatar {
+  width: 33px;
+  height: 33px;
+}
+.xd-share-author > div {
+  flex: 1;
+  min-width: 0;
+}
+.xd-share-author strong {
+  font-size: 14px;
+}
+.xd-share-author small {
+  display: block;
+  font-size: 11px;
+}
+.xd-share-author .xd-badge {
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+}
+.xd-share-author > svg {
+  width: 19px;
+  height: 19px;
+  color: var(--xd-muted);
+}
+.xd-share-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.xd-share-card > small {
+  font-size: 11px;
+}
+.xd-share-card > footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--xd-line);
+  margin-top: 11px;
+  padding-top: 9px;
+  font-size: 11px;
+  color: var(--xd-muted);
+}
+.xd-share-card > footer span:last-child {
+  color: #1d9bf0;
+}
+@keyframes xd-flash {
+  from {
+    background: #a1d8ff;
+  }
+  to {
+    background: #d9efff;
+  }
+}
+@media (min-width: 600px) {
+  .xd-profile > .xd-large {
+    top: calc(100cqw / 3 - 48px);
+  }
+}
+#phone-screen.xd-screen {
+  container-type: inline-size;
+}
+.xd-profile > .xd-large {
+  top: calc(100cqw / 3 - 48px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .xd-locate {
+    animation: none;
+  }
+}
+
+.xd-screen[data-view="home"] > .xd-fab {
+  bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+}
+.xd-screen:not([data-view="home"]) > .xd-fab {
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.xd-screen:not([data-view="home"]) > .xd-body {
+  padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+}
+.xd-screen.xd-compose > .xd-body {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.xd-profile > .xd-large.xd-joint {
+  font-size: 24px;
+  white-space: nowrap;
+  letter-spacing: -1px;
+}
+
+/* Center the title against the viewport, independent of the action count. */
+#phone-screen.xd-screen > .xd-header {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) 88px;
+  column-gap: 0;
+}
+.xd-header > .xd-icon,
+.xd-header > .xd-cancel {
+  justify-self: start;
+}
+.xd-header > .xd-primary {
+  justify-self: end;
+}
+.xd-title {
+  width: 100%;
+  text-align: center;
+}
+.xd-title-label {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 19px;
+  font-weight: 750;
+}
+.xd-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.xd-header-actions .xd-icon {
+  width: 38px;
+  height: 38px;
+}
+.xd-header .xd-icon svg {
+  width: 25px;
+  height: 25px;
+}
+.xd-profile-info h1 > .xd-badge {
+  width: 22px;
+  height: 22px;
+}
+#global-bottom-nav .nav-item[data-target="phone-screen"] svg.xd-nav-feather {
+  width: 28px;
+  height: 28px;
+  transform: none !important;
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Diary is a separate app after entering from the shared bottom navigation. */
+#phone-screen.xd-screen > .xd-fab {
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+#global-bottom-nav .nav-item[data-target="phone-screen"] svg.xd-nav-feather {
+  width: 26px;
+  height: 26px;
+}
+/* Keep the header and formatting dock outside the scrolling writing area. */
+#phone-screen.xd-screen.xd-compose {
+  position: fixed;
+  top: var(--xd-viewport-top, 0px);
+  left: 0;
+  width: 100%;
+  height: var(--xd-viewport-height, 100dvh);
+  max-height: none;
+  z-index: 10000;
+}
+#phone-screen.xd-screen.xd-compose > .xd-body {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  min-height: 0;
+  padding: 0;
+}
+.xd-compose-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: 16px;
+}
+.xd-compose-scroll .xd-compose-area {
+  min-height: 0;
+  padding: 14px 16px 0;
+}
+.xd-compose-scroll .xd-editor {
+  min-height: 96px;
+  padding-bottom: 24px;
+}
+.xd-compose .xd-compose-footer {
+  position: relative;
+  bottom: auto;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+}
+.xd-compose .xd-editor-tools {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.xd-compose .xd-editor-tools::-webkit-scrollbar {
+  display: none;
+}
+.xd-compose .xd-editor-tools > * {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+/* One horizontal formatting rail, with persistent color shortcuts beneath it. */
+.xd-compose .xd-editor-tools {
+  min-width: 0;
+  width: 100%;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+.xd-common-colors {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 9px 1px 2px;
+  scrollbar-width: none;
+}
+.xd-common-colors > * {
+  flex: 0 0 auto;
+}
+.xd-common-colors small {
+  font-size: 11px;
+  color: var(--xd-muted);
+  margin-right: 1px;
+}
+.xd-color-swatch {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 1px solid #0f14191a;
+  box-shadow: inset 0 0 0 2px #ffffff66;
+}
+.xd-color-add {
+  width: 23px;
+  height: 23px;
+  text-align: center;
+  border: 1px solid var(--xd-border);
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--xd-muted);
+  line-height: 19px;
+}
+.xd-color-preview {
+  padding: 18px 12px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 18px;
+}
+.xd-field input[type="color"] {
+  height: 44px;
+  padding: 4px;
+}
+/* Expanded X-style letter detail. The shared app navigation remains hidden. */
+#phone-screen.xd-screen.xd-reading {
+  position: fixed;
+  top: var(--xd-viewport-top, 0px);
+  left: 0;
+  width: 100%;
+  height: var(--xd-viewport-height, 100dvh);
+  max-height: none;
+  z-index: 10000;
+}
+#phone-screen.xd-screen.xd-reading > .xd-body {
+  padding-bottom: 0;
+}
+.xd-read-author {
+  padding: 20px 16px 15px;
+  gap: 10px;
+}
+.xd-read-names {
+  flex: 1;
+  min-width: 0;
+}
+.xd-read-names .xd-byline {
+  font-size: 15px;
+}
+.xd-read-names .xd-byline strong {
+  max-width: 100%;
+}
+.xd-read-names > small {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+.xd-follow {
+  background: var(--xd-text);
+  color: white;
+  border-radius: 22px;
+  font-size: 14px;
+  line-height: 1.1;
+  font-weight: 700;
+  padding: 8px 16px;
+  flex: none;
+}
+.xd-reading .xd-full {
+  padding: 12px 16px 22px;
+}
+.xd-reading .xd-read-time {
+  padding: 15px 16px;
+  font-size: 13px;
+}
+.xd-reading .xd-toolbar {
+  display: flex;
+  padding: 9px 16px;
+  margin: 0;
+  border-top: 1px solid var(--xd-line);
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-reading .xd-toolbar .xd-icon {
+  min-width: 30px;
+  height: 29px;
+}
+.xd-reading .xd-toolbar svg {
+  width: 22px;
+  height: 22px;
+}
+.xd-related {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px 13px;
+  border-bottom: 1px solid var(--xd-line);
+  color: var(--xd-muted);
+  font-size: 14px;
+  font-weight: 650;
+}
+.xd-related > .xd-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.xd-related svg {
+  width: 14px;
+  height: 14px;
+}
+.xd-related > .xd-button:last-child svg {
+  transform: rotate(-90deg);
+}
+.xd-reading .xd-comments {
+  border-top: 0;
+}
+.xd-reading .xd-comment {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--xd-line);
+}
+.xd-read-dock {
+  flex: none;
+  position: relative;
+  background: var(--xd-bg);
+  border-top: 1px solid var(--xd-line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.xd-read-dock .xd-comment-form {
+  display: block;
+  padding: 9px 12px 0;
+}
+.xd-comment-compose-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 3px 0 14px;
+  background: var(--xd-soft);
+  border-radius: 24px;
+}
+.xd-read-dock .xd-comment-input {
+  flex: 1;
+  min-width: 0;
+  width: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font:
+    14px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  min-height: 40px;
+  height: 40px;
+  max-height: 90px;
+  padding: 9px 0;
+  resize: none;
+  outline: none;
+}
+.xd-comment-send {
+  width: 32px;
+  height: 32px;
+  background: #1d9bf0;
+  color: #fff;
+}
+.xd-comment-send svg {
+  width: 18px;
+  height: 18px;
+}
+.xd-read-dock .xd-comment-toggle {
+  padding: 6px 3px 1px;
+  font-size: 11px;
+}
+.xd-read-dock .xd-comment-toggle input {
+  width: 13px;
+  height: 13px;
+}
+.xd-reader-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 47px;
+  padding: 2px 8px;
+}
+.xd-reader-nav .xd-icon {
+  width: 40px;
+  height: 40px;
+}
+.xd-reader-nav .xd-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.xd-reader-nav .xd-icon:first-child svg {
+  fill: currentColor;
+}
+.xd-prose sup,
+.xd-prose sub {
+  font-size: 0.75em;
+}
+.xd-comment-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  margin: 8px 0 0;
+  color: var(--xd-muted);
+}
+.xd-comment-toolbar > .xd-icon {
+  width: 26px;
+  height: 26px;
+}
+.xd-comment-toolbar svg {
+  width: 18px;
+  height: 18px;
+}
+.xd-comment-toolbar .xd-liked {
+  color: #f91880;
+}
+.xd-reading .xd-comment p {
+  margin: 7px 0;
+  line-height: 1.6;
+}
+.xd-reply-target {
+  display: block;
+  font-size: 11px;
+}
+/* Compact date lookup, matching the reference's vertical rhythm. */
+.xd-month-controls {
+  padding: 5px 14px;
+  gap: 4px;
+  min-height: 43px;
+}
+.xd-month-controls > .xd-icon {
+  width: 30px;
+  height: 30px;
+}
+.xd-year-choice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 15px;
+  font-weight: 700;
+}
+.xd-month-controls .xd-year-choice input {
+  width: 49px;
+  padding: 0;
+  text-align: center;
+  font-size: 15px;
+  appearance: textfield;
+}
+.xd-year-choice input::-webkit-inner-spin-button,
+.xd-year-choice input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.xd-month-controls select {
+  font-size: 15px;
+  padding: 2px;
+}
+.xd-today {
+  margin: 6px 16px 5px auto;
+  font-size: 13px;
+  padding: 1px 0;
+}
+.xd-calendar-grid {
+  gap: 0;
+  grid-auto-rows: 31px;
+  padding: 0 15px;
+  align-items: center;
+}
+.xd-calendar-grid > small {
+  padding: 0;
+  font-size: 13px;
+  line-height: 31px;
+}
+.xd-day {
+  width: 31px;
+  height: 31px;
+  font-size: 15px;
+}
+.xd-day i {
+  width: 3px;
+  height: 3px;
+  bottom: 2px;
+}
+.xd-calendar-hint {
+  margin: 8px 16px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.xd-date-heading {
+  padding: 7px 16px;
+  flex-wrap: nowrap;
+  gap: 8px;
+  min-height: 41px;
+}
+.xd-selected-date {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  white-space: nowrap;
+  flex: none;
+}
+.xd-selected-date strong {
+  font-size: 17px;
+}
+.xd-selected-date small {
+  font-size: 12px;
+}
+.xd-date-heading .xd-filters {
+  padding: 4px 0;
+  gap: 13px;
+  min-width: 0;
+  font-size: 13px;
+}
+.xd-date-heading .xd-filters > .xd-button {
+  max-width: 76px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xd-calendar-preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 7px 0 4px;
+}
+.xd-calendar-result {
+  padding-block: 13px;
+}
+.xd-calendar-end {
+  margin: 17px 16px 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--xd-muted);
+}
+.xd-comment .xd-byline {
+  flex-wrap: wrap;
+}
+.xd-comment-time {
+  color: var(--xd-muted);
+  font-size: 11px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+#phone-screen.xd-screen.xd-compose > .xd-body {
+  grid-template-columns: minmax(0, 1fr);
+}
+.xd-compose .xd-compose-footer,
+.xd-compose-scroll {
+  min-width: 0;
+}
+.xd-compose .xd-compose-footer {
+  width: 100%;
+  overflow: hidden;
+}
+.xd-common-colors {
+  min-width: 0;
+  width: 100%;
+}
+/* Compact type hierarchy and rhythm; top safe-area padding is retained. */
+#phone-screen.xd-screen > .xd-header {
+  min-height: 56px;
+  padding-bottom: 6px;
+}
+.xd-title-label,
+.xd-title > strong {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.xd-title small {
+  font-size: 11px;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+.xd-profile > .xd-large {
+  width: 84px;
+  height: 84px;
+  top: calc(100cqw / 3 - 46px);
+}
+.xd-profile-actions {
+  min-height: 52px;
+  padding: 7px 15px;
+  gap: 7px;
+}
+.xd-profile-info {
+  padding: 7px 15px 8px;
+}
+.xd-profile-info h1 {
+  font-size: 21px;
+  line-height: 1.15;
+  margin-bottom: 3px;
+  gap: 5px;
+}
+.xd-profile-info h1 > .xd-badge {
+  width: 20px;
+  height: 20px;
+}
+.xd-profile-info h1 > svg:not(.xd-badge) {
+  width: 17px;
+  height: 17px;
+}
+.xd-handle {
+  font-size: 13px;
+  line-height: 1.3;
+  margin: 0 0 6px;
+}
+.xd-bio {
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+.xd-profile-meta {
+  gap: 9px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+.xd-profile-meta svg {
+  width: 15px;
+  height: 15px;
+}
+.xd-count {
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 8px 0 0;
+}
+.xd-outline {
+  font-size: 12px;
+  padding: 7px 12px;
+}
+.xd-tabs > .xd-button {
+  padding: 12px 7px;
+  font-size: 14px;
+  line-height: 1.3;
+}
+.xd-letter {
+  gap: 9px;
+  padding: 10px 14px 9px;
+}
+.xd-byline {
+  min-height: 18px;
+  font-size: 14px;
+  line-height: 1.2;
+  gap: 3px;
+}
+.xd-byline > .xd-muted {
+  font-size: 12px;
+}
+.xd-byline .xd-badge {
+  width: 15px;
+  height: 15px;
+}
+.xd-time {
+  font-size: 11px;
+  line-height: 1.25;
+  margin-top: 1px;
+}
+.xd-preview {
+  margin: 3px 0 2px;
+}
+.xd-prose p,
+.xd-prose div {
+  margin: 0 0 0.5em;
+}
+.xd-prose p:last-child,
+.xd-prose div:last-child {
+  margin-bottom: 0;
+}
+.xd-text {
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 2px 0;
+}
+.xd-toolbar {
+  margin-top: 3px;
+}
+.xd-toolbar .xd-icon {
+  height: 26px;
+}
+.xd-toolbar svg {
+  width: 18px;
+  height: 18px;
+}
+.xd-connected:before {
+  top: 52px;
+  bottom: -11px;
+}
+.xd-read-author {
+  padding: 14px 16px 8px;
+}
+.xd-read-names .xd-byline {
+  font-size: 14px;
+}
+.xd-read-names > small {
+  font-size: 12px;
+  margin-top: 1px;
+  line-height: 1.3;
+}
+.xd-follow {
+  font-size: 12px;
+  padding: 7px 14px;
+}
+.xd-reading .xd-full {
+  padding: 6px 16px 12px;
+}
+.xd-reading .xd-read-time {
+  padding: 10px 16px;
+  font-size: 12px;
+}
+.xd-reading .xd-toolbar {
+  padding: 6px 16px 3px;
+}
+.xd-reading .xd-toolbar svg {
+  width: 20px;
+  height: 20px;
+}
+.xd-related {
+  padding: 4px 16px 7px;
+  font-size: 13px;
+}
+.xd-reading .xd-comment {
+  padding: 11px 16px;
+}
+.xd-reading .xd-comment p {
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 5px 0;
+}
+.xd-comment-toolbar {
+  margin-top: 5px;
+}
+.xd-comment-toolbar svg {
+  width: 17px;
+  height: 17px;
+}
+.xd-comment-send[hidden] {
+  display: none !important;
+}
+.xd-read-dock .xd-comment-form {
+  padding-top: 7px;
+}
+.xd-read-dock .xd-comment-input {
+  min-height: 38px;
+  height: 38px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.xd-to {
+  padding: 11px 16px;
+}
+.xd-to p {
+  margin-top: 7px;
+  font-size: 11px;
+}
+.xd-compose-scroll .xd-compose-area {
+  padding-top: 11px;
+}
+.xd-form > p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Reference icon shapes and restrained thread separators. */
+.xd-group .xd-connected::after {
+  content: "";
+  position: absolute;
+  left: 63px;
+  right: 14px;
+  bottom: 0;
+  height: 1px;
+  background: var(--xd-line, var(--xd-line));
+}
+.xd-header .xd-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+}
+.xd-header .xd-icon[aria-label="更多"] svg {
+  stroke-width: 3;
+}
+.xd-reader-nav .xd-icon svg {
+  stroke-width: 1.9;
+}
+.xd-reader-nav .xd-icon:first-child svg {
+  stroke: none;
+}
+.xd-reading .xd-toolbar {
+  border-top: 0;
+  border-bottom: 0;
+}
+
+/* Smaller action glyphs, blue-gray reply field and a little calendar air. */
+.xd-toolbar svg {
+  width: 15px;
+  height: 15px;
+}
+.xd-reading .xd-toolbar svg {
+  width: 17px;
+  height: 17px;
+}
+.xd-comment-toolbar svg {
+  width: 15px;
+  height: 15px;
+}
+.xd-related {
+  margin-top: 7px;
+  padding-top: 6px;
+}
+.xd-reading .xd-read-time {
+  font-weight: 550;
+  color: var(--xd-muted);
+}
+.xd-comment-compose-line {
+  background: var(--xd-soft);
+}
+.xd-read-dock .xd-comment-input {
+  color: var(--xd-muted);
+  font-weight: 550;
+}
+.xd-read-dock .xd-comment-input::placeholder {
+  color: var(--xd-muted);
+  opacity: 1;
+  font-weight: 550;
+}
+.xd-reader-nav .xd-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.85;
+}
+.xd-calendar-grid {
+  grid-auto-rows: 33px;
+  row-gap: 1px;
+}
+
+/* Restore one pixel to supporting text without enlarging letter prose. */
+.xd-time,
+.xd-comment-time {
+  font-size: 12px;
+}
+.xd-reading .xd-read-time,
+.xd-byline > .xd-muted,
+.xd-read-names > small,
+.xd-profile-meta,
+.xd-count,
+.xd-calendar-hint {
+  font-size: 13px;
+}
+.xd-title small {
+  font-size: 12px;
+}
+
+/* Reference contours carry their own proportions and line weight. */
+.xd-toolbar svg {
+  width: 18px;
+  height: 18px;
+}
+.xd-reading .xd-toolbar svg {
+  width: 19px;
+  height: 19px;
+}
+.xd-comment-toolbar svg {
+  width: 18px;
+  height: 18px;
+}
+.xd-traced,
+.xd-traced > path {
+  stroke: none !important;
+  transform: none;
+  vector-effect: none;
+}
+.xd-reading .xd-read-time {
+  font-weight: 400;
+  color: var(--xd-muted);
+}
+.xd-time,
+.xd-comment-time {
+  font-weight: 400;
+}
+.xd-letter {
+  padding-bottom: 7px;
+}
+.xd-reading .xd-comment {
+  padding-bottom: 9px;
+}
+
+/* Post actions span the row; comments keep a compact pair at the right. */
+.xd-letter-main > .xd-toolbar {
+  margin-left: -6px;
+  margin-right: -8px;
+}
+.xd-reading .xd-toolbar {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.xd-toolbar svg,
+.xd-comment-toolbar svg {
+  width: 16px;
+  height: 16px;
+}
+.xd-toolbar svg[data-icon="repost"],
+.xd-comment-toolbar svg[data-icon="repost"] {
+  width: 18px;
+  height: 18px;
+}
+.xd-reading .xd-toolbar svg {
+  width: 17px;
+  height: 17px;
+}
+.xd-reading .xd-toolbar svg[data-icon="repost"] {
+  width: 19px;
+  height: 19px;
+}
+.xd-comment-toolbar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) 28px 28px;
+  gap: 0;
+  justify-items: start;
+  margin-left: -5px;
+  margin-right: -10px;
+}
+.xd-comment-toolbar > .xd-icon:nth-last-child(-n + 2) {
+  justify-self: end;
+}
+.xd-reader-nav svg[data-icon="grok"] {
+  width: 26px;
+  height: 26px;
+}
+
+/* Exterior actions use equal center spacing even when counts are present. */
+.xd-letter-main > .xd-toolbar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) 26px;
+  gap: 0;
+  justify-items: start;
+}
+.xd-letter-main > .xd-toolbar > .xd-icon {
+  position: relative;
+  width: 26px;
+  min-width: 26px;
+}
+.xd-letter-main > .xd-toolbar > .xd-icon small {
+  position: absolute;
+  left: calc(50% + 11px);
+  white-space: nowrap;
+}
+/* Match the reference share contour with a small, proportional expansion. */
+.xd-toolbar .xd-traced:not([data-icon="share"]) > path,
+.xd-comment-toolbar .xd-traced:not([data-icon="share"]) > path {
+  stroke: currentColor !important;
+  stroke-width: 0.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Home spacing and the slightly larger detail action rail. */
+.xd-letter-main > .xd-toolbar {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+}
+.xd-reading .xd-toolbar svg {
+  width: 19px;
+  height: 19px;
+}
+.xd-reading .xd-toolbar svg[data-icon="repost"] {
+  width: 21px;
+  height: 21px;
+}
+.xd-connected::before {
+  top: 57px;
+  bottom: -3px;
+  background: var(--xd-line);
+}
+.xd-read-time > strong {
+  font-weight: 700;
+}
+.xd-translation {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  color: var(--xd-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 5px 0 3px;
+}
+.xd-translation > svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.xd-translation-toggle {
+  font-size: 12px;
+  color: #1d9bf0;
+  padding: 2px 5px;
+  border-radius: 10px;
+}
+.xd-reading .xd-translation {
+  margin: 2px 16px 3px;
+}
+
+.xd-translation > .xd-translation-settings {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  color: var(--xd-muted);
+  margin-left: 1px;
+}
+.xd-translation-settings > svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.65;
+}
+
+/* Explicit tracks avoid Safari flex shrink placing the reader dock mid-screen. */
+#phone-screen.xd-screen.active.xd-reading {
+  display: grid !important;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  flex: none;
+  min-height: 0;
+}
+#phone-screen.xd-screen.xd-reading > .xd-body {
+  height: auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+#phone-screen.xd-screen.xd-reading > .xd-read-dock {
+  align-self: end;
+}
+.xd-lock-value {
+  display: block;
+  overflow-wrap: anywhere;
+  margin: -4px 0 12px;
+}
+
+/* Reference detail dock: 34px field, 23px bottom glyphs (including Grok). */
+#phone-screen.xd-screen > .xd-read-dock {padding:7px 12px calc(3px + env(safe-area-inset-bottom,0px));background:var(--xd-bg);border-color:var(--xd-line);}
+#phone-screen.xd-screen .xd-read-dock .xd-comment-form {padding:0;}
+#phone-screen.xd-screen .xd-comment-compose-line {min-height:34px;padding:0 4px 0 12px;background:var(--xd-soft);}
+#phone-screen.xd-screen .xd-read-dock .xd-comment-input {min-height:34px;height:34px;padding:7px 4px;font-size:14px;line-height:20px;font-weight:400;background:transparent!important;color:var(--xd-text)!important;border:0!important;}
+#phone-screen.xd-screen .xd-read-dock .xd-comment-input::placeholder {font-size:14px;font-weight:400;color:var(--xd-muted);}
+#phone-screen.xd-screen .xd-reader-nav {padding:6px 5px 0;min-height:43px;justify-content:space-between;color:var(--xd-text);}
+#phone-screen.xd-screen .xd-reader-nav .xd-icon {width:40px;height:40px;}
+#phone-screen.xd-screen .xd-reader-nav .xd-icon svg,
+#phone-screen.xd-screen .xd-reader-nav svg[data-icon="grok"] {width:23px;height:23px;}
+.xd-follow {background:var(--xd-button);color:var(--xd-button-text);}
+.xd-shade .xd-sheet {background:var(--xd-bg);color:var(--xd-text);}
+.xd-shade .xd-sheet > header {background:var(--xd-bg)!important;color:var(--xd-text)!important;border-color:var(--xd-line)!important;}
+.xd-shade .xd-field :is(input,textarea,select),
+#phone-screen.xd-screen :is(input,textarea,select) {background-color:var(--xd-input)!important;color:var(--xd-text)!important;border-color:var(--xd-border)!important;}
+#phone-screen.xd-screen > .xd-header {color:var(--xd-text)!important;border-color:var(--xd-line)!important;}
+#phone-screen.xd-screen .xd-reader-nav {background:var(--xd-bg)!important;}
+#phone-screen.xd-screen .xd-badge,.xd-shade .xd-badge,.xd-share-card .xd-badge {color:var(--xd-blue);}
+.xd-night .xd-sheet {background:var(--xd-surface);}
+.xd-night .xd-sheet > header {background:var(--xd-surface)!important;}
+.xd-night .xd-prose mark {background:#514719;color:var(--xd-text);}
+.xd-night .xd-mark-highlight {background:color-mix(in srgb,var(--xd-mark-color) 28%,#000);}
+.xd-night .xd-prompt-section {border-color:var(--xd-line);}
+
+/* Keep sheet headers independent when the application's global night skin is active. */
+.xd-shade:not(.xd-night) .xd-sheet > header {background:var(--xd-bg)!important;color:var(--xd-text)!important;}
+.xd-shade.xd-night .xd-sheet > header {background:var(--xd-surface)!important;color:var(--xd-text)!important;}
+.xd-night .xd-mark-highlight {background-color:#514719;background-color:color-mix(in srgb,var(--xd-mark-color) 28%,#000);}
+
+/* A restrained outline follow button on the pure-black page. */
+#phone-screen.xd-screen.xd-night .xd-follow {
+  background:transparent!important;
+  color:var(--xd-text)!important;
+  border:1px solid var(--xd-line);
+  box-shadow:none;
+}
+#phone-screen.xd-screen.xd-night .xd-follow:hover {background:var(--xd-surface)!important;}
